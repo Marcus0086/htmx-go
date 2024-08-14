@@ -2,3 +2,4 @@
 node_modules
 package*.json
 tailwind.condfig.js
+htmx-go
