@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/styles.css" rel="stylesheet">
+    <script src="/static/htmx.min.js"></script>
+    <title>Document</title>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-lg mt-10">
+        <h1 class="text-2xl font-bold text-center mb-5">Todo List</h1>
+        <form hx-post="/add" hx-target="#todos" hx-swap="beforeend" class="mb-4">
+            <input type="text" name="todo" class="w-full px-4 py-2 rounded border border-gray-300"
+                placeholder="Enter a new todo" required>
+            <button type="submit" class="mt-2 w-full bg-blue-500 text-white py-2 rounded">Add Todo</button>
+        </form>
+        <div id="todos">
+            {{ range .todos }}
+            <div id="todo-{{ .id }}"
+                class="mb-2 p-4 border-2 border-dotted {{ if .done }}border-green-500{{ else }}border-yellow-500{{ end }}">
+                <div class="flex justify-between items-center">
+                    <p class="text-lg {{ if .done }}line-through{{ end }}">{{ .text }}</p>
+                    <div class="flex">
+                        <button hx-post="/update" hx-target="#todo-{{ .id }}" hx-swap="outerHTML"
+                            class="mr-2 bg-green-500 text-white px-3 py-1 rounded">
+                            <input type="hidden" name="id" value="{{ .id }}">
+                            Check
+                        </button>
+                        <button hx-post="/delete" hx-target="#todo-{{ .id }}" hx-swap="delete"
+                            class="bg-red-500 text-white px-3 py-1 rounded">
+                            <input type="hidden" name="id" value="{{ .id }}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</body>
+</html>
