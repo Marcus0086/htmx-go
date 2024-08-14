@@ -1,0 +1,18 @@
+<div id="todo-{{ .id }}"
+    class="mb-2 p-4 border-2 border-dotted {{ if .done }}border-green-500{{ else }}border-yellow-500{{ end }}">
+    <div class="flex justify-between items-center">
+        <p class="text-lg {{ if .done }}line-through{{ end }}">{{ .text }}</p>
+        <div class="flex">
+            <button hx-post="/update" hx-target="#todo-{{ .id }}" hx-swap="outerHTML"
+                class="mr-2 bg-green-500 text-white px-3 py-1 rounded">
+                <input type="hidden" name="id" value="{{ .id }}">
+                Check
+            </button>
+            <button hx-post="/delete" hx-target="#todo-{{ .id }}" hx-swap="delete"
+                class="bg-red-500 text-white px-3 py-1 rounded">
+                <input type="hidden" name="id" value="{{ .id }}">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
