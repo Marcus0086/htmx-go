@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"htmx-go/internal/app/handlers"
@@ -11,7 +11,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func Handler(c *gin.Context) {
+	gin.SetMode(gin.ReleaseMode)
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
